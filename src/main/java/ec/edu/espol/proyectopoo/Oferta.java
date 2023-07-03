@@ -9,5 +9,6 @@ package ec.edu.espol.proyectopoo;
  * @author byron
  */
 public class Oferta {
+    Comprador comprador;
     
 }
