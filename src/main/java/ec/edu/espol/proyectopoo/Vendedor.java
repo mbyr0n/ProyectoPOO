@@ -5,6 +5,7 @@
 package ec.edu.espol.proyectopoo;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -29,9 +30,38 @@ public class Vendedor extends Negociante {
     }
 
     //metodos
-    public void registroVendedor(String n, String ape, String orga, String correo, String clave) {
+    public static void registroVendedor(Scanner sc, String nomFile) { //hay que meter lo del hash
+        ArrayList<Negociante> negociantes = Negociante.readFile(nomFile);
+        System.out.println("Ingrese sus Nombres:");
+        String nom = sc.nextLine();
+        System.out.println("Ingrese sus Apellidos:");
+        String ape = sc.nextLine();
+        System.out.println("Ingrese su Organizacion:");
+        String org = sc.nextLine();
+        int id = Util.nextID(nomFile);
+        
+        String correo = "";
+        boolean correoRep = false;
+        do{
+        System.out.println("Ingrese su correo:");
+        correo = sc.nextLine();
+        for (Negociante n: negociantes){
+            if (n.getCorreo().equals(correo))
+                correoRep = true;
+        }
+        if (correoRep)
+            System.out.println("Correo existente.");
+        }while(!correoRep);
+        
+        System.out.println("Ingrese su Clave:");
+        String c = sc.nextLine();
+        
+        Negociante nV = new Negociante(nom, ape, org, correo, c);
+        Negociante.saveFile(id, nV, nomFile);
     }
-    public void registroVendedor(String correo, String clave){
+    
+    
+    public void registroVehiculo(String correo, String clave){
         
     }
     public void aceptarOferta(String correo, String clave){

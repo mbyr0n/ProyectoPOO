@@ -4,16 +4,20 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author byron
  */
 public class Comprador extends Negociante {
     //atributos
+    private ArrayList<Oferta> ofertas;
     
     //constructor
     public Comprador(String nombre, String apellido, String organizacion, String correo, String clave) {
         super(nombre, apellido, organizacion, correo, clave);
+        this.ofertas = new ArrayList<>();
     }
     
     //metodos

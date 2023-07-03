@@ -4,6 +4,12 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author byron
@@ -70,5 +76,30 @@ public class Negociante {
         
     }
     
+    //metodos para leer y editar archivos donde estan los negociantes
+    public static ArrayList<Negociante> readFile(String nomFile){
+        ArrayList<Negociante> negociantes = new ArrayList<>();
+        
+        try(Scanner sc = new Scanner(new File(nomFile))){
+            while(sc.hasNextLine()){ //transcribi y adapte lo del video del profe pero tengo dudas porque negociante puede ser vendedor o comprador
+                String linea = sc.nextLine();
+                String[] datos = linea.split(",");
+                Negociante nextNeg = new Negociante(datos[0], datos[2], datos[3], datos[4], datos[5]);
+                negociantes.add(nextNeg);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return negociantes;
+    }
     
+    public static void saveFile(int id, Negociante n, String nomFile){
+        try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File(nomFile), true))){
+            pw.println(id + "," + n.getClass() + "," + n.nombre + "," + n.apellido + "," + n.organizacion + "," + n.correo + "," + n.clave);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
