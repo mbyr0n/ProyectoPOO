@@ -4,6 +4,8 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author byron
@@ -13,8 +15,9 @@ public class Camioneta extends Vehiculo {
     private String vidrios, transmision, traccion;
     
     //constructor
-    public Camioneta(String vidrios, String transmision, String traccion, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, char tipoVeh) {
-        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh);
+    
+    public Camioneta(String vidrios, String transmision, String traccion, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, char tipoVeh, Vendedor duenio) {
+        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, new ArrayList<>(), duenio);
         this.vidrios = vidrios;
         this.transmision = transmision;
         this.traccion = traccion;

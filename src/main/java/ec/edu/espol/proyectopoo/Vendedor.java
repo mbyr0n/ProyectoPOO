@@ -16,8 +16,8 @@ public class Vendedor extends Negociante {
     ArrayList<Vehiculo> vehiculos;
     
     //constructor
-    public Vendedor(ArrayList<Vehiculo> vehiculos, String nombre, String apellido, String organizacion, String correo, String clave){    
-        super(nombre, apellido, organizacion, correo, clave);
+    public Vendedor(ArrayList<Vehiculo> vehiculos, int id, String nombre, String apellido, String organizacion, String correo, String clave){    
+        super(id, nombre, apellido, organizacion, correo, clave);
         this.vehiculos = vehiculos;
     }
     public ArrayList<Vehiculo> getVehiculos() {    
@@ -56,8 +56,8 @@ public class Vendedor extends Negociante {
         System.out.println("Ingrese su Clave:");
         String c = sc.nextLine();
         
-        Negociante nV = new Negociante(nom, ape, org, correo, c);
-        Negociante.saveFile(id, nV, nomFile);
+        Negociante nV = new Negociante(id, nom, ape, org, correo, c);
+        Negociante.saveFile(nV, nomFile);
     }
     
     

@@ -4,6 +4,8 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author byron
@@ -14,10 +16,12 @@ public class Vehiculo {
     protected int anio;
     protected double recorrido, precio;
     protected char tipoVeh;
+    protected ArrayList<Oferta> ofertas;
+    protected Vendedor duenio;
     
     //constructor
 
-    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, char tipoVeh) {
+    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, char tipoVeh, ArrayList<Oferta> ofertas, Vendedor duenio) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
@@ -28,6 +32,8 @@ public class Vehiculo {
         this.recorrido = recorrido;
         this.precio = precio;
         this.tipoVeh = tipoVeh;
+        this.ofertas = ofertas;
+        this.duenio = duenio;
     }
     
     //getter y setter
@@ -111,5 +117,23 @@ public class Vehiculo {
     public void setTipoVeh(char tipoVeh) {
         this.tipoVeh = tipoVeh;
     }
+
+    public ArrayList<Oferta> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(ArrayList<Oferta> ofertas) {
+        this.ofertas = ofertas;
+    }
+
+    public Vendedor getDuenio() {
+        return duenio;
+    }
+
+    public void setDuenio(Vendedor duenio) {
+        this.duenio = duenio;
+    }
+    
+    
     
 }
