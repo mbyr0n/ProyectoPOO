@@ -88,7 +88,7 @@ public class Negociante {
     }
     
     //metodos para leer y editar archivos donde estan los negociantes
-    public static ArrayList<Negociante> readFile(String nomFile){
+    public static ArrayList<Negociante> readFileNeg(String nomFile){
         ArrayList<Negociante> negociantes = new ArrayList<>();
         
         try(Scanner sc = new Scanner(new File(nomFile))){
@@ -105,7 +105,7 @@ public class Negociante {
         return negociantes;
     }
     
-    public static void saveFile(Negociante n, String nomFile){
+    public static void saveFileNeg(Negociante n, String nomFile){
         try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File(nomFile), true))){
             pw.println(n.id + "," + n.nombre + "," + n.apellido + "," + n.organizacion + "," + n.correo + "," + n.clave);
         }

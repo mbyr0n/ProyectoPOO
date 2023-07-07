@@ -4,7 +4,12 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -15,13 +20,13 @@ public class Vehiculo {
     protected String placa, marca, modelo, tipoMotor,color,tipoComb;
     protected int anio;
     protected double recorrido, precio;
-    protected char tipoVeh;
+    protected String tipoVeh;
     protected ArrayList<Oferta> ofertas;
-    protected Vendedor duenio;
+    protected String corrDuenio;
     
     //constructor
 
-    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, char tipoVeh, ArrayList<Oferta> ofertas, Vendedor duenio) {
+    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String corrDuenio) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
@@ -32,8 +37,35 @@ public class Vehiculo {
         this.recorrido = recorrido;
         this.precio = precio;
         this.tipoVeh = tipoVeh;
-        this.ofertas = ofertas;
-        this.duenio = duenio;
+        this.ofertas = new ArrayList<>();
+        this.corrDuenio = corrDuenio;
+    }
+    
+    //metodos para leer y editar archivos donde estan los negociantes
+    public static ArrayList<Vehiculo> readFileNeg(){
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+        
+        try(Scanner sc = new Scanner(new File("vehiculos.txt"))){
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();
+                String[] datos = linea.split(",");
+                Vehiculo nextVeh = new Vehiculo(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], Integer.parseInt(datos[6]), Double.parseDouble(datos[7]), Double.parseDouble(datos[8]), datos[9], datos[10]);
+                vehiculos.add(nextVeh);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return vehiculos;
+    }
+    
+    public static void saveFileNeg(Vehiculo v){
+        try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File("vehiculos.txt"), true))){
+            pw.println(v.placa + "," + v.marca + "," + v.modelo + "," + v.tipoMotor + "," + v.color + "," + v.tipoComb + "," + v.anio + "," + v.recorrido + ","+v.precio+","+v.tipoVeh+","+v.corrDuenio);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
     
     //getter y setter
@@ -110,14 +142,6 @@ public class Vehiculo {
         this.precio = precio;
     }
 
-    public char getTipoVeh() {
-        return tipoVeh;
-    }
-
-    public void setTipoVeh(char tipoVeh) {
-        this.tipoVeh = tipoVeh;
-    }
-
     public ArrayList<Oferta> getOfertas() {
         return ofertas;
     }
@@ -126,12 +150,20 @@ public class Vehiculo {
         this.ofertas = ofertas;
     }
 
-    public Vendedor getDuenio() {
-        return duenio;
+    public String getTipoVeh() {
+        return tipoVeh;
     }
 
-    public void setDuenio(Vendedor duenio) {
-        this.duenio = duenio;
+    public void setTipoVeh(String tipoVeh) {
+        this.tipoVeh = tipoVeh;
+    }
+
+    public String getCorrDuenio() {
+        return corrDuenio;
+    }
+
+    public void setCorrDuenio(String corrDuenio) {
+        this.corrDuenio = corrDuenio;
     }
     
     

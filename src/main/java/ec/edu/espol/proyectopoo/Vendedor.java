@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,8 +31,8 @@ public class Vendedor extends Negociante {
     }
 
     //metodos
-    public static void registroVendedor(Scanner sc, String nomFile) { //hay que meter lo del hash
-        ArrayList<Negociante> negociantes = Negociante.readFile(nomFile);
+    public static void registroVendedor(Scanner sc, String nomFile) throws NoSuchAlgorithmException { //completada
+        ArrayList<Negociante> negociantes = Negociante.readFileNeg(nomFile);
         System.out.println("Ingrese sus Nombres:");
         String nom = sc.nextLine();
         System.out.println("Ingrese sus Apellidos:");
@@ -41,27 +42,34 @@ public class Vendedor extends Negociante {
         int id = Util.nextID(nomFile);
         
         String correo = "";
-        boolean correoRep = false;
         do{
         System.out.println("Ingrese su correo:");
         correo = sc.nextLine();
-        for (Negociante n: negociantes){
-            if (n.getCorreo().equals(correo))
-                correoRep = true;
-        }
-        if (correoRep)
-            System.out.println("Correo existente.");
-        }while(!correoRep);
+        }while(Vendedor.existeCorreo(correo, negociantes));
         
         System.out.println("Ingrese su Clave:");
         String c = sc.nextLine();
         
-        Negociante nV = new Negociante(id, nom, ape, org, correo, c);
-        Negociante.saveFile(nV, nomFile);
+        String hashClave = Util.toHexString(Util.generarHash(c));
+        
+        Negociante nV = new Negociante(id, nom, ape, org, correo, hashClave);
+        Negociante.saveFileNeg(nV, nomFile);
     }
     
     
-    public void registroVehiculo(String correo, String clave){
+    public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{
+        System.out.println("Ingrese su correo:");
+        String correo = sc.nextLine();
+        System.out.println("Ingrese su Clave:");
+        String c = sc.nextLine();
+        String hashClave = Util.toHexString(Util.generarHash(c));
+        
+        ArrayList<Negociante> negociantes = Negociante.readFileNeg("negociantes.txt");
+        for (Negociante v: negociantes){
+            if (Vendedor.existeClave(hashClave, correo, v)){
+            
+            }
+        }
         
     }
     public void aceptarOferta(String correo, String clave){
@@ -69,5 +77,22 @@ public class Vendedor extends Negociante {
     public void revisarOfertas(String placa){
     }
     public void regresar(){
+    }
+    
+    public static boolean existeCorreo(String correo, ArrayList<Negociante> negociantes) {
+        for (Negociante vendedor : negociantes) {
+            if (vendedor.getCorreo().equalsIgnoreCase(correo)) {
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean existeClave(String clave, String correo, Negociante vendedor) {
+        if (vendedor.getClave().equalsIgnoreCase(clave) && vendedor.getCorreo().equalsIgnoreCase(correo)) {
+                return true;
+        }
+        return false;
     }
 }
