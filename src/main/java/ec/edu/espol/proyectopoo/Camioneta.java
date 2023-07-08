@@ -10,16 +10,14 @@ import java.util.ArrayList;
  *
  * @author byron
  */
-public class Camioneta extends Vehiculo {
+public class Camioneta extends Auto{
     //atributos
     private String vidrios, transmision, traccion;
     
     //constructor
     
-    public Camioneta(String vidrios, String transmision, String traccion, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String duenio) {
-        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, duenio);
-        this.vidrios = vidrios;
-        this.transmision = transmision;
+    public Camioneta(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrios, String transmision, String traccion) {
+        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, vidrios, transmision);
         this.traccion = traccion;
     }
     

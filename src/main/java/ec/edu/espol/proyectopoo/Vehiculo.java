@@ -22,11 +22,11 @@ public class Vehiculo {
     protected double recorrido, precio;
     protected String tipoVeh;
     protected ArrayList<Oferta> ofertas;
-    protected String corrDuenio;
+    protected Vendedor duenio;
     
     //constructor
 
-    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String corrDuenio) {
+    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
@@ -38,18 +38,17 @@ public class Vehiculo {
         this.precio = precio;
         this.tipoVeh = tipoVeh;
         this.ofertas = new ArrayList<>();
-        this.corrDuenio = corrDuenio;
     }
     
     //metodos para leer y editar archivos donde estan los negociantes
-    public static ArrayList<Vehiculo> readFileNeg(){
+    public static ArrayList<Vehiculo> readFileVeh(){
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         
         try(Scanner sc = new Scanner(new File("vehiculos.txt"))){
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] datos = linea.split(",");
-                Vehiculo nextVeh = new Vehiculo(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], Integer.parseInt(datos[6]), Double.parseDouble(datos[7]), Double.parseDouble(datos[8]), datos[9], datos[10]);
+                Vehiculo nextVeh = new Vehiculo(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], Integer.parseInt(datos[6]), Double.parseDouble(datos[7]), Double.parseDouble(datos[8]), datos[9]);
                 vehiculos.add(nextVeh);
             }
         }
@@ -59,9 +58,9 @@ public class Vehiculo {
         return vehiculos;
     }
     
-    public static void saveFileNeg(Vehiculo v){
+    public static void saveFileVeh(Vehiculo v){
         try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File("vehiculos.txt"), true))){
-            pw.println(v.placa + "," + v.marca + "," + v.modelo + "," + v.tipoMotor + "," + v.color + "," + v.tipoComb + "," + v.anio + "," + v.recorrido + ","+v.precio+","+v.tipoVeh+","+v.corrDuenio);
+            pw.println(v.placa + "," + v.marca + "," + v.modelo + "," + v.tipoMotor + "," + v.color + "," + v.tipoComb + "," + v.anio + "," + v.recorrido + ","+v.precio+","+v.tipoVeh);
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -158,12 +157,12 @@ public class Vehiculo {
         this.tipoVeh = tipoVeh;
     }
 
-    public String getCorrDuenio() {
-        return corrDuenio;
+    public Vendedor getDuenio() {
+        return duenio;
     }
 
-    public void setCorrDuenio(String corrDuenio) {
-        this.corrDuenio = corrDuenio;
+    public void setDuenio(Vendedor duenio) {
+        this.duenio = duenio;
     }
     
     

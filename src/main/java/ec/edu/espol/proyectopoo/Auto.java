@@ -15,8 +15,8 @@ public class Auto extends Vehiculo{
     private String vidrio, transmicion;
     
     //constructor
-    public Auto(String vidrio, String transmicion, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String duenio) {
-        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, duenio);
+    public Auto(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrio, String transmicion) {
+        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh);
         this.vidrio = vidrio;
         this.transmicion = transmicion;
     }
