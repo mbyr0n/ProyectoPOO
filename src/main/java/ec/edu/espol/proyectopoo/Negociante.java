@@ -21,6 +21,10 @@ public class Negociante {
     protected String nombre, apellido, organizacion, correo, clave;
     
     //constructor
+    public Negociante() {
+    }
+    
+    
     public Negociante(int id, String nombre, String apellido, String organizacion, String correo, String clave) {
         this.id = id;
         this.nombre = nombre;
@@ -29,6 +33,15 @@ public class Negociante {
         this.correo = correo;
         this.clave = clave;
     }
+
+    public Negociante(String nombre, String apellido, String correo, String clave) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.clave = clave;
+    }
+    
+    
     
     //getter y setter
     public String getNombre() {

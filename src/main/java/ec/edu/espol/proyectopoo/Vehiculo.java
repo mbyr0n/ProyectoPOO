@@ -67,6 +67,39 @@ public class Vehiculo {
         }
     }
     
+    public Oferta verOfertas(Scanner sc){
+        int pos = 0;
+        int opc = 0;
+        ArrayList<Oferta> ofertas = this.ofertas;
+        Oferta nxtOf = new Oferta();
+        
+        do{
+            System.out.println("Oferta" + (pos+1)); 
+            System.out.println("Correo: " + ofertas.get(pos).getOfertador().getCorreo());
+            System.out.println("Precio Ofertado: " + ofertas.get(pos).getOferta());
+            System.out.println("1. Siguiente Oferta");
+            if (pos>0){
+                System.out.println("2. Anterior Oferta");
+                System.out.println("3. Aceptar Oferta");
+            }else if(pos==0){
+                System.out.println("2. Aceptar Oferta");
+            }
+            opc = sc.nextInt();
+            sc.nextLine();
+            if (opc == 1){
+                pos += 1;
+                opc = 0;
+            }else if(opc==2 && pos>0){
+                pos -= 1;
+                opc = 0;
+            }else if(opc==3 || (opc==2 && pos==0)){
+                nxtOf = ofertas.get(pos);
+            }
+        }while(opc != 3 || (opc==2 && pos==0));
+        
+        return nxtOf;
+    }
+    
     //getter y setter
 
     public String getPlaca() {

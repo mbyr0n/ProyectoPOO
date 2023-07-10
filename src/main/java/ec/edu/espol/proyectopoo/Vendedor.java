@@ -17,6 +17,10 @@ public class Vendedor extends Negociante {
     ArrayList<Vehiculo> vehiculos;
     
     //constructor
+    public Vendedor(){
+        super();
+    }
+    
     public Vendedor(int id, String nombre, String apellido, String organizacion, String correo, String clave){    
         super(id, nombre, apellido, organizacion, correo, clave);
         this.vehiculos = new ArrayList<>();
@@ -68,7 +72,7 @@ public class Vendedor extends Negociante {
         Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
         
         if (null != usuario){
-            Vendedor nxtDuenio = (Vendedor) usuario;
+            Vendedor nxtDuenio = (Vendedor) usuario; //por si acaso para ver si hay que incluir un duenio en el constructor del vehiculo
             System.out.print("Placa: ");
             String placa = sc.nextLine();
             
@@ -135,11 +139,8 @@ public class Vendedor extends Negociante {
         }
     }
     
-    public void aceptarOferta(String correo, String clave){
-    }
     
-    
-    public static void revisarOfertas(Scanner sc) throws NoSuchAlgorithmException{
+    public static void revisarOfertas(Scanner sc) throws NoSuchAlgorithmException{// en proceso
         System.out.println("Ingrese su correo:");
         String correo = sc.nextLine();
         System.out.println("Ingrese su Clave:");
@@ -148,13 +149,17 @@ public class Vendedor extends Negociante {
         
         Vendedor nxtDuenio = (Vendedor) Negociante.existeClaveCorreo(hashClave, correo);
         
-        System.out.print("Ingrese la Placa: ");
+        System.out.println("Ingrese la Placa: ");
         String placa = sc.nextLine();
         
         ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
         for (Vehiculo v: vehs){
-            if (v.getPlaca().equals(placa))
+            if (v.getPlaca().equals(placa)){
                 System.out.println(v.getMarca()+" " + v.getModelo() + " Precio: " + v.getPrecio());
+                System.out.println("Se han realizado " + v.getOfertas().size() + "ofertas");
+                
+                Oferta of = v.verOfertas(sc);
+            }
         }
         
         
