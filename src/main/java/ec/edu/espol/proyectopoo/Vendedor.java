@@ -46,7 +46,7 @@ public class Vendedor extends Negociante {
         do{
         System.out.println("Ingrese su correo:");
         correo = sc.nextLine();
-        }while(Vendedor.existeCorreo(correo, negociantes));
+        }while(Negociante.existeCorreo(correo, negociantes));
         
         System.out.println("Ingrese su Clave:");
         String c = sc.nextLine();
@@ -58,100 +58,111 @@ public class Vendedor extends Negociante {
     }
     
     
-    public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{
+    public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{ //terminado
         System.out.println("Ingrese su correo:");
         String correo = sc.nextLine();
         System.out.println("Ingrese su Clave:");
         String c = sc.nextLine();
         String hashClave = Util.toHexString(Util.generarHash(c));
         
-        ArrayList<Negociante> negociantes = Negociante.readFileNeg("negociantes.txt");
-        Vendedor nxtDuenio = null;
-        for (Negociante v: negociantes){
-            if (Vendedor.existeClave(hashClave, correo, v)){
-                nxtDuenio = (Vendedor) v;
-            }
-        }
+        Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
         
-        if (nxtDuenio instanceof Vendedor){
-             System.out.print("Placa: ");
+        if (null != usuario){
+            Vendedor nxtDuenio = (Vendedor) usuario;
+            System.out.print("Placa: ");
             String placa = sc.nextLine();
-
-            System.out.print("Marca: ");
-            String marca = sc.nextLine();
-
-            System.out.print("Modelo: ");
-            String modelo = sc.nextLine();
-
-            System.out.print("Tipo de motor: ");
-            String tipoMotor = sc.nextLine();
-
-            System.out.print("Año: ");
-            int anio = sc.nextInt();
-            sc.nextLine(); // Consumir el salto de línea después de leer el entero
-
-            System.out.print("Recorrido: ");
-            double recorrido = sc.nextDouble();
-            sc.nextLine(); // Consumir el salto de línea después de leer el punto flotante
-
-            System.out.print("Color: ");
-            String color = sc.nextLine();
-
-            System.out.print("Tipo de combustible: ");
-            String tipoCombustible = sc.nextLine();
-        
-            System.out.print("Precio: ");
-            double precio = sc.nextDouble();
-        
-            System.out.print("Tipo de Vehículo: ");
-            String tipoVeh = sc.nextLine();
-        
-            if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Auto")){
-                System.out.print("Vidrios: ");
-                String vidrio = sc.nextLine();
-
-                System.out.print("Transmisión: ");
-                String transm = sc.nextLine();
-
-                if (tipoVeh.equals("Auto")){
-                    Auto vehiculo = new Auto(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
-                    Vehiculo.saveFileVeh(vehiculo);
-                }else if (tipoVeh.equals("Camioneta")){
-                    System.out.print("Tracción: ");
-                    String traccion = sc.nextLine();
-                    Camioneta vehiculo = new Camioneta(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
-                    Vehiculo.saveFileVeh(vehiculo);
+            
+            ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
+            boolean filt = true;
+            for (Vehiculo v: vehs){
+                if (v.placa.equals(placa)){
+                    System.out.println("Placa ya existente.");
+                    filt = false;
                 }
-            }else{
-               Vehiculo vehiculo = new Vehiculo(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh);
-               Vehiculo.saveFileVeh(vehiculo);
             }
             
-        }
+            if (filt == true){
+                System.out.print("Marca: ");
+                String marca = sc.nextLine();
+
+                System.out.print("Modelo: ");
+                String modelo = sc.nextLine();
+
+                System.out.print("Tipo de motor: ");
+                String tipoMotor = sc.nextLine();
+
+                System.out.print("Año: ");
+                int anio = sc.nextInt();
+                sc.nextLine(); // Consumir el salto de línea después de leer el entero
+
+                System.out.print("Recorrido: ");
+                double recorrido = sc.nextDouble();
+                sc.nextLine(); // Consumir el salto de línea después de leer el punto flotante
+
+                System.out.print("Color: ");
+                String color = sc.nextLine();
+
+                System.out.print("Tipo de combustible: ");
+                String tipoCombustible = sc.nextLine();
         
+                System.out.print("Precio: ");
+                double precio = sc.nextDouble();
+        
+                System.out.print("Tipo de Vehículo: ");
+                String tipoVeh = sc.nextLine();
+        
+                if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Auto")){
+                    System.out.print("Vidrios: ");
+                    String vidrio = sc.nextLine();
+
+                    System.out.print("Transmisión: ");
+                    String transm = sc.nextLine();
+
+                    if (tipoVeh.equals("Auto")){
+                        Auto vehiculo = new Auto(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
+                        Vehiculo.saveFileVeh(vehiculo);
+                    }else if (tipoVeh.equals("Camioneta")){
+                        System.out.print("Tracción: ");
+                        String traccion = sc.nextLine();
+                        Camioneta vehiculo = new Camioneta(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
+                        Vehiculo.saveFileVeh(vehiculo);
+                    }
+                }else{
+                    Vehiculo vehiculo = new Vehiculo(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh);
+                    Vehiculo.saveFileVeh(vehiculo);
+                }
+            }    
+        }
     }
     
     public void aceptarOferta(String correo, String clave){
     }
-    public void revisarOfertas(String placa){
+    
+    
+    public static void revisarOfertas(Scanner sc) throws NoSuchAlgorithmException{
+        System.out.println("Ingrese su correo:");
+        String correo = sc.nextLine();
+        System.out.println("Ingrese su Clave:");
+        String c = sc.nextLine();
+        String hashClave = Util.toHexString(Util.generarHash(c));
+        
+        Vendedor nxtDuenio = (Vendedor) Negociante.existeClaveCorreo(hashClave, correo);
+        
+        System.out.print("Ingrese la Placa: ");
+        String placa = sc.nextLine();
+        
+        ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
+        for (Vehiculo v: vehs){
+            if (v.getPlaca().equals(placa))
+                System.out.println(v.getMarca()+" " + v.getModelo() + " Precio: " + v.getPrecio());
+        }
+        
+        
+        
     }
+    
+    
     public void regresar(){
     }
     
-    public static boolean existeCorreo(String correo, ArrayList<Negociante> negociantes) {
-        for (Negociante vendedor : negociantes) {
-            if (vendedor.getCorreo().equalsIgnoreCase(correo)) {
-                
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public static boolean existeClave(String clave, String correo, Negociante vendedor) {
-        if (vendedor.getClave().equalsIgnoreCase(clave) && vendedor.getCorreo().equalsIgnoreCase(correo)) {
-                return true;
-        }
-        return false;
-    }
 }

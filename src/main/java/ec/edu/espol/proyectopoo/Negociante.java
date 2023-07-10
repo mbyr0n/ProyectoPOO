@@ -113,4 +113,26 @@ public class Negociante {
             System.out.println(e.getMessage());
         }
     }
+    
+     //metodos de ayuda
+    public static boolean existeCorreo(String correo, ArrayList<Negociante> negociantes) {
+        for (Negociante vendedor : negociantes){
+            if (vendedor.getCorreo().equalsIgnoreCase(correo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static Negociante existeClaveCorreo(String clave, String correo){
+        ArrayList<Negociante> negociantes = Negociante.readFileNeg("negociantes.txt");
+        Negociante usuario = null;
+        for (Negociante u: negociantes){
+            if (usuario.getClave().equalsIgnoreCase(clave) && usuario.getCorreo().equalsIgnoreCase(correo)){
+                usuario = u;
+            }
+        }
+        return usuario;
+        
+    }
 }
