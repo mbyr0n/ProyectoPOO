@@ -4,13 +4,20 @@
 
 package ec.edu.espol.proyectopoo;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
+
 /**
  *
  * @author byron
  */
 public class ProyectoPOO {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+        System.out.println("VENTA DE VEHICULOS");
+        System.out.println(" ");
+        Scanner sc = new Scanner(System.in);
+        
+        MenuOpciones.Vendedor(sc);
     }
 }

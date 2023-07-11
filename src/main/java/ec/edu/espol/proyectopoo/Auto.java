@@ -15,11 +15,17 @@ public class Auto extends Vehiculo{
     private String vidrio, transmicion;
     
     //constructor
-    public Auto(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrio, String transmicion) {
-        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh);
+    public Auto(int id, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrio, String transmicion) {
+        super(id, placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh);
         this.vidrio = vidrio;
         this.transmicion = transmicion;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + vidrio + "," + transmicion;
+    }
+    
     
     //getter y setter
 

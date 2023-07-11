@@ -17,6 +17,7 @@ import java.util.Scanner;
  */
 public class Vehiculo {
     //atributos
+    protected int id;
     protected String placa, marca, modelo, tipoMotor,color,tipoComb;
     protected int anio;
     protected double recorrido, precio;
@@ -26,7 +27,8 @@ public class Vehiculo {
     
     //constructor
 
-    public Vehiculo(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh) {
+    public Vehiculo(int id, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh) {
+        this.id = id;
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
@@ -48,7 +50,7 @@ public class Vehiculo {
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] datos = linea.split(",");
-                Vehiculo nextVeh = new Vehiculo(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], Integer.parseInt(datos[6]), Double.parseDouble(datos[7]), Double.parseDouble(datos[8]), datos[9]);
+                Vehiculo nextVeh = new Vehiculo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], Integer.parseInt(datos[7]), Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), datos[10]);
                 vehiculos.add(nextVeh);
             }
         }
@@ -60,14 +62,14 @@ public class Vehiculo {
     
     public static void saveFileVeh(Vehiculo v){
         try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File("vehiculos.txt"), true))){
-            pw.println(v.placa + "," + v.marca + "," + v.modelo + "," + v.tipoMotor + "," + v.color + "," + v.tipoComb + "," + v.anio + "," + v.recorrido + ","+v.precio+","+v.tipoVeh);
+            pw.println(v.toString());
         }
         catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
     
-    public Oferta verOfertas(Scanner sc){
+    public Oferta verOfertas(Scanner sc){ //meti aca el metodo ver ofertas para reducir codigo
         int pos = 0;
         int opc = 0;
         ArrayList<Oferta> ofertas = this.ofertas;
@@ -98,7 +100,14 @@ public class Vehiculo {
         }while(opc != 3 || (opc==2 && pos==0));
         
         return nxtOf;
+    }//para avanzar y retroceder por las ofertas disponibles
+
+    @Override
+    public String toString() {
+        return this.id + "," + this.placa + "," + this.marca + "," + this.modelo + "," + this.tipoMotor + "," + this.color + "," + this.tipoComb + "," + this.anio + "," + this.recorrido + ","+this.precio+","+this.tipoVeh;
     }
+    
+    
     
     //getter y setter
 

@@ -15,7 +15,7 @@ public class Oferta {
     private Vehiculo vehiculo;
     private double oferta;
 
-    public Oferta() {
+public Oferta(){
     }
 
     public Oferta(Comprador comprador, Vehiculo vehiculo, double oferta) {

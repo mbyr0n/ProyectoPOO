@@ -12,32 +12,21 @@ import java.util.ArrayList;
  */
 public class Camioneta extends Auto{
     //atributos
-    private String vidrios, transmision, traccion;
+    private String traccion;
     
     //constructor
     
-    public Camioneta(String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrios, String transmision, String traccion) {
-        super(placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, vidrios, transmision);
+    public Camioneta(int id, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrios, String transmision, String traccion) {
+        super(id, placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, vidrios, transmision);
         this.traccion = traccion;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "," + traccion;
     }
     
     //getter y setter
-
-    public String getVidrios() {
-        return vidrios;
-    }
-
-    public void setVidrios(String vidrios) {
-        this.vidrios = vidrios;
-    }
-
-    public String getTransmision() {
-        return transmision;
-    }
-
-    public void setTransmision(String transmision) {
-        this.transmision = transmision;
-    }
 
     public String getTraccion() {
         return traccion;

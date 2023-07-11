@@ -46,7 +46,7 @@ public class Vendedor extends Negociante {
         String org = sc.nextLine();
         int id = Util.nextID(nomFile);
         
-        String correo = "";
+        String correo = ""; //obligar que ingrese un correo unico
         do{
         System.out.println("Ingrese su correo:");
         correo = sc.nextLine();
@@ -55,37 +55,39 @@ public class Vendedor extends Negociante {
         System.out.println("Ingrese su Clave:");
         String c = sc.nextLine();
         
-        String hashClave = Util.toHexString(Util.generarHash(c));
+        String hashClave = Util.toHexString(Util.generarHash(c)); //transformar la clave a hash y eso se guarda
         
         Negociante nV = new Negociante(id, nom, ape, org, correo, hashClave);
-        Negociante.saveFileNeg(nV, nomFile);
+        Negociante.saveFileNeg(nV, nomFile); //guardo en el archivo
     }
     
     
     public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{ //terminado
-        System.out.println("Ingrese su correo:");
+        System.out.print("Ingrese su correo:");
         String correo = sc.nextLine();
-        System.out.println("Ingrese su Clave:");
+        System.out.print("Ingrese su Clave:");
         String c = sc.nextLine();
         String hashClave = Util.toHexString(Util.generarHash(c));
         
         Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
+        System.out.println(usuario);
         
-        if (null != usuario){
-            Vendedor nxtDuenio = (Vendedor) usuario; //por si acaso para ver si hay que incluir un duenio en el constructor del vehiculo
+        if (null != usuario){ //verifica que exista un usuario con correo y clave anteriores
+            int id = Util.nextID("vehiculos.txt"); // id nuevo
+            //Vendedor nxtDuenio = (Vendedor) usuario; //por si acaso para ver si hay que incluir un duenio en el constructor del vehiculo
             System.out.print("Placa: ");
             String placa = sc.nextLine();
             
             ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
             boolean filt = true;
-            for (Vehiculo v: vehs){
+            for (Vehiculo v: vehs){ //Verificar que la placa no exista en el arhivo
                 if (v.placa.equals(placa)){
                     System.out.println("Placa ya existente.");
                     filt = false;
                 }
             }
             
-            if (filt == true){
+            if (filt == true){  //si se cumple el filtro pide los datos para crear al vehiculo
                 System.out.print("Marca: ");
                 String marca = sc.nextLine();
 
@@ -111,28 +113,29 @@ public class Vendedor extends Negociante {
         
                 System.out.print("Precio: ");
                 double precio = sc.nextDouble();
+                sc.nextLine();
         
                 System.out.print("Tipo de Vehículo: ");
                 String tipoVeh = sc.nextLine();
         
-                if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Auto")){
+                if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Auto")){ //Por si es Camioneta o Auto
                     System.out.print("Vidrios: ");
                     String vidrio = sc.nextLine();
 
                     System.out.print("Transmisión: ");
                     String transm = sc.nextLine();
 
-                    if (tipoVeh.equals("Auto")){
-                        Auto vehiculo = new Auto(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
+                    if (tipoVeh.equals("Auto")){ 
+                        Auto vehiculo = new Auto(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
                         Vehiculo.saveFileVeh(vehiculo);
-                    }else if (tipoVeh.equals("Camioneta")){
+                    }else if (tipoVeh.equals("Camioneta")){//Por si es Auto ya que los 2 atributos anteriores los hereda de Auto
                         System.out.print("Tracción: ");
                         String traccion = sc.nextLine();
-                        Camioneta vehiculo = new Camioneta(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
+                        Camioneta vehiculo = new Camioneta(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
                         Vehiculo.saveFileVeh(vehiculo);
                     }
-                }else{
-                    Vehiculo vehiculo = new Vehiculo(placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh);
+                }else{//Si no es Auto o Camioneta los guarda nomas
+                    Vehiculo vehiculo = new Vehiculo(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh);
                     Vehiculo.saveFileVeh(vehiculo);
                 }
             }    

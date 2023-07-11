@@ -139,9 +139,9 @@ public class Negociante {
     
     public static Negociante existeClaveCorreo(String clave, String correo){
         ArrayList<Negociante> negociantes = Negociante.readFileNeg("negociantes.txt");
-        Negociante usuario = null;
+        Negociante usuario = new Negociante();
         for (Negociante u: negociantes){
-            if (usuario.getClave().equalsIgnoreCase(clave) && usuario.getCorreo().equalsIgnoreCase(correo)){
+            if (usuario.getClave().equals(clave) && usuario.getCorreo().equals(correo)){
                 usuario = u;
             }
         }

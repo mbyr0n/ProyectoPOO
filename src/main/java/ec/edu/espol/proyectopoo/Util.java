@@ -19,7 +19,7 @@ public class Util {
     
     private Util(){}
     
-    public static int nextID(String nomFile){
+    public static int nextID(String nomFile){ //para sacar ids consecutivo segun el video del profesor
         int id = 0;
         try (Scanner sc = new Scanner(new File(nomFile))){
             String linea = sc.nextLine();
