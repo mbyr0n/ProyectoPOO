@@ -162,6 +162,7 @@ public class Vendedor extends Negociante {
                 System.out.println("Se han realizado " + v.getOfertas().size() + "ofertas");
                 
                 Oferta of = v.verOfertas(sc);
+                
             }
         }
         

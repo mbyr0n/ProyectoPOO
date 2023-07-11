@@ -73,11 +73,17 @@ public class Vehiculo {
         int pos = 0;
         int opc = 0;
         ArrayList<Oferta> ofertas = this.ofertas;
+        ArrayList<Negociante> negos = Vendedor.readFileNeg("negociantes.txt");
         Oferta nxtOf = new Oferta();
+        String mail = "";
         
         do{
             System.out.println("Oferta" + (pos+1)); 
-            System.out.println("Correo: " + ofertas.get(pos).getOfertador().getCorreo());
+            for (Negociante n: negos){
+                if (n.getId()==ofertas.get(pos).getIdComp())
+                    mail = n.getCorreo();
+            }
+            System.out.println("Correo: " + mail);
             System.out.println("Precio Ofertado: " + ofertas.get(pos).getOferta());
             System.out.println("1. Siguiente Oferta");
             if (pos>0){

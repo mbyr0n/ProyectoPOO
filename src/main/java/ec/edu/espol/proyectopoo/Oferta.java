@@ -11,38 +11,38 @@ import java.util.ArrayList;
  * @author byron
  */
 public class Oferta {
-    private Comprador ofertador;
-    private Vehiculo vehiculo;
+    private int idComp;
+    private int idVeh;
     private double oferta;
 
 public Oferta(){
     }
 
-    public Oferta(Comprador comprador, Vehiculo vehiculo, double oferta) {
-        this.ofertador = comprador;
-        this.vehiculo = vehiculo;
+    public Oferta(int idComp, int idVeh, double oferta) {
+        this.idComp = idComp;
+        this.idComp = idVeh;
         this.oferta = oferta;
     }
 
     @Override
     public String toString() {
-        return "Correo: " + ofertador.getCorreo() +"/n Precio Ofertado: " + oferta;
+        return "/n Precio Ofertado: " + oferta;
     }
 
-    public Comprador getOfertador() {
-        return ofertador;
+    public int getIdComp() {
+        return idComp;
     }
 
-    public void setOfertador(Comprador ofertador) {
-        this.ofertador = ofertador;
+    public void setIdComp(int idComp) {
+        this.idComp = idComp;
     }
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public int getIdVeh() {
+        return idVeh;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setIdVeh(int idVeh) {
+        this.idVeh = idVeh;
     }
 
     public double getOferta() {
