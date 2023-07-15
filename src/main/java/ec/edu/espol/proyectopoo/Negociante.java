@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -93,11 +94,29 @@ public class Negociante {
     }
     
     //metodos
-    public void almacenarContrasenia(String usuario, String contrasenia){
+    public static void registro(Scanner sc, String nomFile) throws NoSuchAlgorithmException { //completada
+        ArrayList<Negociante> negociantes = Negociante.readFileNeg(nomFile);
+        System.out.println("Ingrese sus Nombres:");
+        String nom = sc.nextLine();
+        System.out.println("Ingrese sus Apellidos:");
+        String ape = sc.nextLine();
+        System.out.println("Ingrese su Organizacion:");
+        String org = sc.nextLine();
+        int id = Util.nextID(nomFile);
         
-    }
-    public void calcularHash(String contrasenia){
+        String correo = ""; //obligar que ingrese un correo unico
+        do{
+        System.out.println("Ingrese su correo:");
+        correo = sc.nextLine();
+        }while(Negociante.existeCorreo(correo, negociantes));
         
+        System.out.println("Ingrese su Clave:");
+        String c = sc.nextLine();
+        
+        String hashClave = Util.toHexString(Util.generarHash(c)); //transformar la clave a hash y eso se guarda
+        
+        Negociante nV = new Negociante(id, nom, ape, org, correo, hashClave);
+        Negociante.saveFileNeg(nV, nomFile); //guardo en el archivo
     }
     
     //metodos para leer y editar archivos donde estan los negociantes

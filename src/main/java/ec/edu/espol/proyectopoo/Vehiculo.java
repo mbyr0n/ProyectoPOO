@@ -212,7 +212,18 @@ public class Vehiculo {
     public void setDuenio(Vendedor duenio) {
         this.duenio = duenio;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
+    public void agregarOferta(Oferta oferta) {
+    ofertas.add(oferta);
+    }
     
     
 }

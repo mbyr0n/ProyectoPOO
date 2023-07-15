@@ -35,32 +35,64 @@ public class Vendedor extends Negociante {
         this.vehiculos = vehiculos;
     }
 
-    //metodos
-    public static void registroVendedor(Scanner sc, String nomFile) throws NoSuchAlgorithmException { //completada
-        ArrayList<Negociante> negociantes = Negociante.readFileNeg(nomFile);
-        System.out.println("Ingrese sus Nombres:");
-        String nom = sc.nextLine();
-        System.out.println("Ingrese sus Apellidos:");
-        String ape = sc.nextLine();
-        System.out.println("Ingrese su Organizacion:");
-        String org = sc.nextLine();
-        int id = Util.nextID(nomFile);
-        
-        String correo = ""; //obligar que ingrese un correo unico
-        do{
-        System.out.println("Ingrese su correo:");
-        correo = sc.nextLine();
-        }while(Negociante.existeCorreo(correo, negociantes));
-        
-        System.out.println("Ingrese su Clave:");
-        String c = sc.nextLine();
-        
-        String hashClave = Util.toHexString(Util.generarHash(c)); //transformar la clave a hash y eso se guarda
-        
-        Negociante nV = new Negociante(id, nom, ape, org, correo, hashClave);
-        Negociante.saveFileNeg(nV, nomFile); //guardo en el archivo
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getOrganizacion() {
+        return organizacion;
+    }
+
+    public void setOrganizacion(String organizacion) {
+        this.organizacion = organizacion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
     
+
+    //metodos
+    public void registroVendedor() throws NoSuchAlgorithmException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("--- Registro de Nuevo Vendedor ---");
+        String nomFile = "nombreArchivo.txt";
+
+        Negociante.registro(scanner, nomFile);
+    }
+     
     
     public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{ //terminado
         System.out.print("Ingrese su correo:");

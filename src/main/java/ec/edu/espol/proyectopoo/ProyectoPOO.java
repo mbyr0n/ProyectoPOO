@@ -5,6 +5,7 @@
 package ec.edu.espol.proyectopoo;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,7 +18,9 @@ public class ProyectoPOO {
         System.out.println("VENTA DE VEHICULOS");
         System.out.println(" ");
         Scanner sc = new Scanner(System.in);
-        
-        MenuOpciones.Vendedor(sc);
+        Negociante negociante = new Negociante(); 
+        ArrayList<Negociante> negociantes = new ArrayList<>();
+        MenuOpciones menu = new MenuOpciones(negociante, negociantes);
+        menu.mostrarMenuPrincipal();
     }
 }

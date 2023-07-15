@@ -41,32 +41,100 @@ public class MenuOpciones {
     }
     
     //metodos
-    public static void Vendedor(Scanner sc) throws NoSuchAlgorithmException{ //opciones de vendedor para solo llamar en el main
-        int acc = 0;
-        System.out.println("1. Registrar nuevo Vendedor");
-        System.out.println("2. Registrar nuevo Vehículo");
-        System.out.println("3. Aceptar Oefrta");
-        System.out.println("4. Regresar");
-        acc = sc.nextInt();
-        sc.nextLine();
-        
-        switch (acc) {
-            case 1:
-                Vendedor.registroVendedor(sc, "negociantes.txt");
-                break;
-            case 2:
-                Vendedor.registroVehiculo(sc);
-                break;
-            case 3:
-                Vendedor.revisarOfertas(sc);
-                break;
-            case 4:
-                //regresar
-                break;
-            default:
-                break;
-        }
-    }//falta terminar los metodos pero en la clase vendedor
-    
-    
+    public void mostrarMenuPrincipal() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("Menú de Opciones:");
+            System.out.println("1. Vendedor");
+            System.out.println("2. Comprador");
+            System.out.println("3. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
+
+            switch (opcion) {
+                case 1:
+                    mostrarMenuVendedor();
+                    break;
+                case 2:
+                    mostrarMenuComprador();
+                    break;
+                case 3:
+                    System.out.println("¡Hasta luego!");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    break;
+            }
+        } while (opcion != 3);
+    }
+
+    //método para mostrar el menú del vendedor
+    public static void mostrarMenuVendedor(){
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("\nMenú del Vendedor:");
+            System.out.println("1. Registrar un nuevo vendedor");
+            System.out.println("2. Registrar un nuevo vehículo");
+            System.out.println("3. Aceptar oferta");
+            System.out.println("4. Regresar");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
+
+            switch (opcion) {
+                case 1:
+                    // Lógica para registrar un nuevo vendedor
+                    break;
+                case 2:
+                    // Lógica para registrar un nuevo vehículo
+                    break;
+                case 3:
+                    // Lógica para aceptar una oferta
+                    break;
+                case 4:
+                    System.out.println("Regresando al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    break;
+            }
+        } while (opcion != 4);
+    }
+
+    //método para mostrar el menú del comprador
+    public void mostrarMenuComprador() {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("\nMenú del Comprador:");
+            System.out.println("1. Registrar un nuevo comprador");
+            System.out.println("2. Ofertar por un vehículo");
+            System.out.println("3. Regresar");
+            System.out.print("Seleccione una opción: ");
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer del scanner
+
+            switch (opcion) {
+                case 1:
+                    // Lógica para registrar un nuevo comprador
+                    break;
+                case 2:
+                    // Lógica para ofertar por un vehículo
+                    break;
+                case 3:
+                    System.out.println("Regresando al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    break;
+            }
+        } while (opcion != 3);
+    }
+
 }
