@@ -106,8 +106,10 @@ public class MenuOpciones {
                     String hashClave = Util.toHexString(Util.generarHash(c));
         
                     Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
-                    Comprador comp = (Comprador) usuario;// Lógica para ofertar por un vehículo
-                    comp.ofertarPorVehiculo(scanner);
+                    if (usuario != null){
+                        Comprador comp = (Comprador) usuario;// Lógica para ofertar por un vehículo
+                        comp.ofertarPorVehiculo(scanner);
+                    }
                     break;
                 case 3:
                     System.out.println("Regresando al menú principal...");
