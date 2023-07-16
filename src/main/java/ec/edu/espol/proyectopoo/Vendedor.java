@@ -46,9 +46,9 @@ public class Vendedor extends Negociante {
      
     
     public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{ //terminado
-        System.out.print("Ingrese su correo:");
+        System.out.print("Ingrese su correo: ");
         String correo = sc.nextLine();
-        System.out.print("Ingrese su Clave:");
+        System.out.print("Ingrese su Clave: ");
         String c = sc.nextLine();
         String hashClave = Util.toHexString(Util.generarHash(c));
         
@@ -100,17 +100,17 @@ public class Vendedor extends Negociante {
                 System.out.print("Tipo de Vehículo: ");
                 String tipoVeh = sc.nextLine();
         
-                if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Auto")){ //Por si es Camioneta o Auto
+                if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Auto") || tipoVeh.equals("camioneta") || tipoVeh.equals("auto")){ //Por si es Camioneta o Auto
                     System.out.print("Vidrios: ");
                     String vidrio = sc.nextLine();
 
                     System.out.print("Transmisión: ");
                     String transm = sc.nextLine();
 
-                    if (tipoVeh.equals("Auto")){ 
+                    if (tipoVeh.equals("Auto") || tipoVeh.equals("auto")){ 
                         Auto vehiculo = new Auto(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
                         Vehiculo.saveFileVeh(vehiculo);
-                    }else if (tipoVeh.equals("Camioneta")){//Por si es Auto ya que los 2 atributos anteriores los hereda de Auto
+                    }else if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Camioneta")){//Por si es Auto ya que los 2 atributos anteriores los hereda de Auto
                         System.out.print("Tracción: ");
                         String traccion = sc.nextLine();
                         Camioneta vehiculo = new Camioneta(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
@@ -126,15 +126,16 @@ public class Vendedor extends Negociante {
     
     
     public static void revisarOfertas(Scanner sc) throws NoSuchAlgorithmException{// en proceso
-        System.out.println("Ingrese su correo:");
+        System.out.print("Ingrese su correo: ");
         String correo = sc.nextLine();
-        System.out.println("Ingrese su Clave:");
+        System.out.print("Ingrese su Clave: ");
         String c = sc.nextLine();
         String hashClave = Util.toHexString(Util.generarHash(c));
-        
-        Vendedor nxtDuenio = (Vendedor) Negociante.existeClaveCorreo(hashClave, correo);
-        
-        if (nxtDuenio != null){
+
+        if (Negociante.existeClave(hashClave, Negociante.readFileNeg("negociantes.txt")) && Negociante.existeCorreo(correo, Negociante.readFileNeg("negociantes.txt"))){
+            Negociante us = Negociante.existeClaveCorreo(hashClave, correo);
+            Vendedor nxtDuenio = new Vendedor(us.getId(),us.getNombre(),us.getApellido(),us.getOrganizacion(),us.getCorreo(), us.getClave());
+            
             System.out.println("Ingrese la Placa: ");
             String placa = sc.nextLine();
         
@@ -143,14 +144,19 @@ public class Vendedor extends Negociante {
                 if (v.getPlaca().equals(placa)){
                     System.out.println(v.getMarca()+ " " + v.getModelo() + " Precio: " + v.getPrecio());
                     ArrayList<Oferta> ofertas = Oferta.readFileOf();
+                    System.out.println(ofertas);
                     ArrayList<Oferta> ofVeh = new ArrayList<>();
                     
                     for (Oferta o: ofertas){
-                        if (v.getId()==o.getIdVeh())
+                        System.out.println(o.getIdVeh());
+                        System.out.println(v.getId());
+                        if (v.getId() == o.getIdVeh())
                             ofVeh.add(o);
                     }
+                    System.out.println(ofVeh);
                     
                     v.setOfertas(ofVeh);
+                    System.out.println(v.getOfertas());
                 
                     System.out.println("Se han realizado " + v.getOfertas().size() + " ofertas");
                 
@@ -158,7 +164,7 @@ public class Vendedor extends Negociante {
                     
                     Vehiculo.rewriteFileVeh(vehs, v);
                     
-                    ArrayList<Negociante> negocs = Negociante.readFileNeg("negociantes");
+                    ArrayList<Negociante> negocs = Negociante.readFileNeg("negociantes.txt");
                     String destinatario = "";
                     for (Negociante gan: negocs){
                         if (gan.getId() == of.getIdComp())

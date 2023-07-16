@@ -74,6 +74,7 @@ public class Comprador extends Negociante {
 
         while (continuarRevisando) {
             Vehiculo vehiculo = vehiculosEncontrados.get(posicionActual);
+            System.out.println(vehiculo);
             System.out.println("--- Vehículo ---");
             System.out.println("Tipo: " + vehiculo.getTipoVeh());
             System.out.println("Placa: " + vehiculo.getPlaca());
@@ -87,7 +88,9 @@ public class Comprador extends Negociante {
             System.out.println("2. Anterior Vehículo");
             System.out.println("3. Realizar Oferta");
             System.out.println("4. Salir");
-
+            
+            
+            System.out.print("Seleccione una opción: ");
             int opcion = scanner.nextInt();
             scanner.nextLine(); // Limpiar el buffer del scanner
 
@@ -157,6 +160,7 @@ public class Comprador extends Negociante {
         Oferta oferta = new Oferta(this.getId(), v.getId(), precioOfertado);
         this.ofertas.add(oferta);
         v.agregarOferta(oferta);
+        Oferta.saveFileOf(oferta);
         System.out.println("Oferta realizada con éxito. El vehículo ha sido registrado con su oferta.");
     }
 }

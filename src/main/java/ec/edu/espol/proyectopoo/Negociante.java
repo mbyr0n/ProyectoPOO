@@ -154,9 +154,18 @@ public class Negociante {
         return false;
     }
     
+    public static boolean existeClave(String clave, ArrayList<Negociante> negociantes) {
+        for (Negociante vendedor : negociantes){
+            if (vendedor.getClave().equalsIgnoreCase(clave)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public static Negociante existeClaveCorreo(String clave, String correo){
         ArrayList<Negociante> negociantes = Negociante.readFileNeg("negociantes.txt");
-        Negociante usuario = null;
+        Negociante usuario = new Negociante();
         for (Negociante u: negociantes){
             if (u.getClave().equals(clave) && u.getCorreo().equals(correo)){
                 usuario = u;
@@ -165,4 +174,10 @@ public class Negociante {
         return usuario;
         
     }
+
+    @Override
+    public String toString() {
+        return "Negociante{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", organizacion=" + organizacion + ", correo=" + correo + ", clave=" + clave + '}';
+    }
+    
 }

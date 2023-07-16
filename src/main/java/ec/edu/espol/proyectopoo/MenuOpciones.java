@@ -39,7 +39,6 @@ public class MenuOpciones {
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-                    MenuOpciones.mostrarMenuPrincipal(scanner);
                     break;
             }
         } while (opcion != 3);
@@ -71,11 +70,9 @@ public class MenuOpciones {
                     break;
                 case 4:
                     System.out.println("Regresando al menú principal...");
-                    mostrarMenuPrincipal(scanner);
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-                    mostrarMenuVendedor(scanner);
                     break;
             }
         } while (opcion != 4);
@@ -105,19 +102,21 @@ public class MenuOpciones {
                     String c = scanner.nextLine();
                     String hashClave = Util.toHexString(Util.generarHash(c));
         
-                    Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
-                    if (usuario != null){
-                        Comprador comp = (Comprador) usuario;// Lógica para ofertar por un vehículo
+                    if (Negociante.existeCorreo(correo, Negociante.readFileNeg("negociantes.txt")) && Negociante.existeClave(hashClave, Negociante.readFileNeg("negociantes.txt"))){
+                        Negociante us = Negociante.existeClaveCorreo(hashClave, correo);
+                        
+                        Comprador comp = new Comprador(us.getId(),us.getNombre(),us.getApellido(),us.getOrganizacion(),us.getCorreo(), us.getClave());// Lógica para ofertar por un vehículo
                         comp.ofertarPorVehiculo(scanner);
+                    }else{
+                        System.out.println("");
+                        System.out.println("Usuario no existente.");
                     }
                     break;
                 case 3:
                     System.out.println("Regresando al menú principal...");
-                    mostrarMenuPrincipal(scanner);
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
-                    mostrarMenuComprador(scanner);
                     break;
             }
         } while (opcion != 3);

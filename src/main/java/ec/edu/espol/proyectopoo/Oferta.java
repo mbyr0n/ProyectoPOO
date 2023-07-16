@@ -35,6 +35,7 @@ public class Oferta {
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] datos = linea.split(",");
+                System.out.println(datos[1]);
                 Oferta nextOf = new Oferta(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
                 ofertas.add(nextOf);
             }
@@ -56,7 +57,7 @@ public class Oferta {
 
     @Override
     public String toString() {
-        return "/n Precio Ofertado: " + oferta;
+        return "Comp:" + idComp + "Veh:" + idVeh + "Precio Ofertado: " + oferta;
     }
 
     public int getIdComp() {

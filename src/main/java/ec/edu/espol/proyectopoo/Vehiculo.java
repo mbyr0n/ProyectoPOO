@@ -90,7 +90,7 @@ public class Vehiculo {
         String mail = "";
         
         do{
-            System.out.println("Oferta" + (pos+1)); 
+            System.out.println("Oferta " + (pos+1)); 
             for (Negociante n: negos){
                 if (n.getId()==ofertas.get(pos).getIdComp())
                     mail = n.getCorreo();
@@ -124,8 +124,6 @@ public class Vehiculo {
     public String toString() {
         return this.id + "," + this.placa + "," + this.marca + "," + this.modelo + "," + this.tipoMotor + "," + this.color + "," + this.tipoComb + "," + this.anio + "," + this.recorrido + ","+this.precio+","+this.tipoVeh;
     }
-    
-    
     
     //getter y setter
 
@@ -234,7 +232,7 @@ public class Vehiculo {
     }
     
     public void agregarOferta(Oferta oferta) {
-    ofertas.add(oferta);
+        ofertas.add(oferta);
     }
     
     
