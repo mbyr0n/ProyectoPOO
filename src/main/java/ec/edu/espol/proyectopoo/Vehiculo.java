@@ -69,6 +69,18 @@ public class Vehiculo {
         }
     }
     
+    public static void rewriteFileVeh(ArrayList<Vehiculo> vehs, Vehiculo v){
+        vehs.remove(v);
+        try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File("vehiculos.txt"), false))){
+            for (Vehiculo veh: vehs){
+                pw.println(veh.toString());
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public Oferta verOfertas(Scanner sc){ //meti aca el metodo ver ofertas para reducir codigo
         int pos = 0;
         int opc = 0;

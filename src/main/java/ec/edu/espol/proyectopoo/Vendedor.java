@@ -34,61 +34,12 @@ public class Vendedor extends Negociante {
     public void setVehiculos(ArrayList<Vehiculo> vehiculos) {    
         this.vehiculos = vehiculos;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getOrganizacion() {
-        return organizacion;
-    }
-
-    public void setOrganizacion(String organizacion) {
-        this.organizacion = organizacion;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
     
 
     //metodos
-    public void registroVendedor() throws NoSuchAlgorithmException {
-        Scanner scanner = new Scanner(System.in);
+    public static void registroVendedor(Scanner scanner) throws NoSuchAlgorithmException {
         System.out.println("--- Registro de Nuevo Vendedor ---");
-        String nomFile = "nombreArchivo.txt";
+        String nomFile = "negociantes.txt";
 
         Negociante.registro(scanner, nomFile);
     }
@@ -102,7 +53,6 @@ public class Vendedor extends Negociante {
         String hashClave = Util.toHexString(Util.generarHash(c));
         
         Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
-        System.out.println(usuario);
         
         if (null != usuario){ //verifica que exista un usuario con correo y clave anteriores
             int id = Util.nextID("vehiculos.txt"); // id nuevo
@@ -184,26 +134,41 @@ public class Vendedor extends Negociante {
         
         Vendedor nxtDuenio = (Vendedor) Negociante.existeClaveCorreo(hashClave, correo);
         
-        System.out.println("Ingrese la Placa: ");
-        String placa = sc.nextLine();
+        if (nxtDuenio != null){
+            System.out.println("Ingrese la Placa: ");
+            String placa = sc.nextLine();
         
-        ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
-        for (Vehiculo v: vehs){
-            if (v.getPlaca().equals(placa)){
-                System.out.println(v.getMarca()+" " + v.getModelo() + " Precio: " + v.getPrecio());
-                System.out.println("Se han realizado " + v.getOfertas().size() + "ofertas");
+            ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
+            for (Vehiculo v: vehs){
+                if (v.getPlaca().equals(placa)){
+                    System.out.println(v.getMarca()+ " " + v.getModelo() + " Precio: " + v.getPrecio());
+                    ArrayList<Oferta> ofertas = Oferta.readFileOf();
+                    ArrayList<Oferta> ofVeh = new ArrayList<>();
+                    
+                    for (Oferta o: ofertas){
+                        if (v.getId()==o.getIdVeh())
+                            ofVeh.add(o);
+                    }
+                    
+                    v.setOfertas(ofVeh);
                 
-                Oferta of = v.verOfertas(sc);
+                    System.out.println("Se han realizado " + v.getOfertas().size() + " ofertas");
                 
+                    Oferta of = v.verOfertas(sc);
+                    
+                    Vehiculo.rewriteFileVeh(vehs, v);
+                    
+                    ArrayList<Negociante> negocs = Negociante.readFileNeg("negociantes");
+                    String destinatario = "";
+                    for (Negociante gan: negocs){
+                        if (gan.getId() == of.getIdComp())
+                            destinatario = gan.getCorreo();
+                    }
+
+                    Util.enviarConGMail(destinatario, v.getMarca()+ " " + v.getModelo());
+                }
             }
-        }
-        
-        
-        
-    }
-    
-    
-    public void regresar(){
+        }        
     }
     
 }

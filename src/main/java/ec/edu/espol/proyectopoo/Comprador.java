@@ -24,15 +24,15 @@ public class Comprador extends Negociante {
     }
     
     //metodos
-    public void registroComprador() throws NoSuchAlgorithmException {
-        Scanner scanner = new Scanner(System.in);
+    public static void registroComprador(Scanner scanner) throws NoSuchAlgorithmException {
         System.out.println("--- Registro de Nuevo Comprador ---");
-        String nomFile = "nombreArchivo.txt";
+        String nomFile = "negociantes.txt";
 
         Negociante.registro(scanner, nomFile);
     }
-    public void ofertarPorVehiculo() {
-        Scanner scanner = new Scanner(System.in);
+    
+    
+    public void ofertarPorVehiculo(Scanner scanner) {
         System.out.println("--- Búsqueda de Vehículos ---");
 
         System.out.print("Tipo de vehículo (Ingrese 'auto', 'camioneta' o 'moto'): ");
@@ -62,8 +62,7 @@ public class Comprador extends Negociante {
         double precioMaximo = scanner.nextDouble();
         scanner.nextLine(); // Limpiar el buffer del scanner
 
-        ArrayList<Vehiculo> vehiculosEncontrados = buscarVehiculo(tipoVehiculo, recorridoMinimo, recorridoMaximo,
-                anioMinimo, anioMaximo, precioMinimo, precioMaximo);
+        ArrayList<Vehiculo> vehiculosEncontrados = buscarVehiculo(tipoVehiculo, recorridoMinimo, recorridoMaximo, anioMinimo, anioMaximo, precioMinimo, precioMaximo);
 
         if (vehiculosEncontrados.isEmpty()) {
             System.out.println("No se encontraron vehículos que coincidan con los criterios de búsqueda.");
@@ -114,7 +113,7 @@ public class Comprador extends Negociante {
                     double precioOfertado = scanner.nextDouble();
                     scanner.nextLine(); // Limpiar el buffer del scanner
 
-                    registrarOferta(vehiculo, precioOfertado);
+                    this.registrarOferta(vehiculo, precioOfertado);
                     continuarRevisando = false;
                     break;
                 case 4:
@@ -127,8 +126,7 @@ public class Comprador extends Negociante {
         }
     }
 
-    public ArrayList<Vehiculo> buscarVehiculo(String tipoVehiculo, double recorridoMinimo, double recorridoMaximo,
-                                          int anioMinimo, int anioMaximo, double precioMinimo, double precioMaximo) {
+    public static ArrayList<Vehiculo> buscarVehiculo(String tipoVehiculo, double recorridoMinimo, double recorridoMaximo, int anioMinimo, int anioMaximo, double precioMinimo, double precioMaximo) {
     ArrayList<Vehiculo> vehiculosEncontrados = new ArrayList<>();
 
     ArrayList<Vehiculo> listaVehiculos = Vehiculo.readFileVeh();
@@ -155,10 +153,10 @@ public class Comprador extends Negociante {
 }
 
 
-    private void registrarOferta(Vehiculo vehiculo, double precioOfertado) {
-        Oferta oferta = new Oferta(this.getId(), vehiculo.getId(), precioOfertado);
+    public void registrarOferta(Vehiculo v, double precioOfertado) {
+        Oferta oferta = new Oferta(this.getId(), v.getId(), precioOfertado);
         this.ofertas.add(oferta);
-        vehiculo.agregarOferta(oferta);
+        v.agregarOferta(oferta);
         System.out.println("Oferta realizada con éxito. El vehículo ha sido registrado con su oferta.");
     }
 }

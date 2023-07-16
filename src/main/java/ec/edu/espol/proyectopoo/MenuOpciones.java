@@ -13,36 +13,9 @@ import java.util.Scanner;
  * @author byron
  */
 public class MenuOpciones {
-    //atributos 
-    private Negociante negociante;
-    protected ArrayList<Negociante> negociantes;
     
     //metodos
-    public MenuOpciones(Negociante negociante, ArrayList<Negociante> negociantes) {
-        this.negociante = negociante;
-        this.negociantes = negociantes;
-    }
-    
-    //getter y setter
-    public Negociante getNegociante() {
-        return negociante;
-    }
-
-    public void setNegociante(Negociante negociante) {
-        this.negociante = negociante;
-    }
-
-    public ArrayList<Negociante> getNegociantes() {
-        return negociantes;
-    }
-
-    public void setNegociantes(ArrayList<Negociante> negociantes) {
-        this.negociantes = negociantes;
-    }
-    
-    //metodos
-    public void mostrarMenuPrincipal() {
-        Scanner scanner = new Scanner(System.in);
+    public static void mostrarMenuPrincipal(Scanner scanner) throws NoSuchAlgorithmException {
         int opcion;
 
         do {
@@ -56,24 +29,24 @@ public class MenuOpciones {
 
             switch (opcion) {
                 case 1:
-                    mostrarMenuVendedor();
+                    MenuOpciones.mostrarMenuVendedor(scanner);
                     break;
                 case 2:
-                    mostrarMenuComprador();
+                    MenuOpciones.mostrarMenuComprador(scanner);
                     break;
                 case 3:
                     System.out.println("¡Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    MenuOpciones.mostrarMenuPrincipal(scanner);
                     break;
             }
         } while (opcion != 3);
     }
 
     //método para mostrar el menú del vendedor
-    public static void mostrarMenuVendedor(){
-        Scanner scanner = new Scanner(System.in);
+    public static void mostrarMenuVendedor(Scanner scanner) throws NoSuchAlgorithmException{
         int opcion;
 
         do {
@@ -88,27 +61,28 @@ public class MenuOpciones {
 
             switch (opcion) {
                 case 1:
-                    // Lógica para registrar un nuevo vendedor
+                    Vendedor.registroVendedor(scanner);// Lógica para registrar un nuevo vendedor
                     break;
                 case 2:
-                    // Lógica para registrar un nuevo vehículo
+                    Vendedor.registroVehiculo(scanner);// Lógica para registrar un nuevo vehículo
                     break;
                 case 3:
-                    // Lógica para aceptar una oferta
+                    Vendedor.revisarOfertas(scanner);// Lógica para aceptar una oferta
                     break;
                 case 4:
                     System.out.println("Regresando al menú principal...");
+                    mostrarMenuPrincipal(scanner);
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    mostrarMenuVendedor(scanner);
                     break;
             }
         } while (opcion != 4);
     }
 
     //método para mostrar el menú del comprador
-    public void mostrarMenuComprador() {
-        Scanner scanner = new Scanner(System.in);
+    public static void mostrarMenuComprador(Scanner scanner) throws NoSuchAlgorithmException {
         int opcion;
 
         do {
@@ -122,16 +96,26 @@ public class MenuOpciones {
 
             switch (opcion) {
                 case 1:
-                    // Lógica para registrar un nuevo comprador
+                    Comprador.registroComprador(scanner);// Lógica para registrar un nuevo comprador
                     break;
                 case 2:
-                    // Lógica para ofertar por un vehículo
+                    System.out.print("Ingrese su correo:");
+                    String correo = scanner.nextLine();
+                    System.out.print("Ingrese su Clave:");
+                    String c = scanner.nextLine();
+                    String hashClave = Util.toHexString(Util.generarHash(c));
+        
+                    Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
+                    Comprador comp = (Comprador) usuario;// Lógica para ofertar por un vehículo
+                    comp.ofertarPorVehiculo(scanner);
                     break;
                 case 3:
                     System.out.println("Regresando al menú principal...");
+                    mostrarMenuPrincipal(scanner);
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    mostrarMenuComprador(scanner);
                     break;
             }
         } while (opcion != 3);

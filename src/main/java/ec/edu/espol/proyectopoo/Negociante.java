@@ -42,8 +42,6 @@ public class Negociante {
         this.clave = clave;
     }
     
-    
-    
     //getter y setter
     public String getNombre() {
         return nombre;
