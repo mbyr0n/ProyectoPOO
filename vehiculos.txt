@@ -1,2 +1,1 @@
-1,0924456,Chevrolet,Bernoulli 72,DC,Azul,Diesel,2016,12.0,12500.67,Moto
-2,09266638,Mitsubishu,Neon72,AC,Azul,Eco,2020,233.0,12333.5,Camioneta,3,mucha,20 hp
+2,09266638,Mitsubishu,Neon72,AC,Azul,Eco,2020,233.0,12333.5,Camioneta

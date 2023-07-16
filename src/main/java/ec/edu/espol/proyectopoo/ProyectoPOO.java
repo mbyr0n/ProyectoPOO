@@ -16,8 +16,7 @@ public class ProyectoPOO {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
         
-        System.out.println("VENTA DE VEHICULOS");
-        System.out.println(" ");
+        System.out.println("VENTA DE VEHICULOS \n");
         
         Scanner sc = new Scanner(System.in);
         MenuOpciones.mostrarMenuPrincipal(sc);

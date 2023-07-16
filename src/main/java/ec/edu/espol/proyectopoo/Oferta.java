@@ -24,7 +24,7 @@ public class Oferta {
 
     public Oferta(int idComp, int idVeh, double oferta) {
         this.idComp = idComp;
-        this.idComp = idVeh;
+        this.idVeh = idVeh;
         this.oferta = oferta;
     }
     
@@ -35,7 +35,6 @@ public class Oferta {
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] datos = linea.split(",");
-                System.out.println(datos[1]);
                 Oferta nextOf = new Oferta(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
                 ofertas.add(nextOf);
             }

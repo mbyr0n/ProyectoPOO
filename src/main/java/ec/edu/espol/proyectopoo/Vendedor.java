@@ -144,19 +144,14 @@ public class Vendedor extends Negociante {
                 if (v.getPlaca().equals(placa)){
                     System.out.println(v.getMarca()+ " " + v.getModelo() + " Precio: " + v.getPrecio());
                     ArrayList<Oferta> ofertas = Oferta.readFileOf();
-                    System.out.println(ofertas);
                     ArrayList<Oferta> ofVeh = new ArrayList<>();
                     
                     for (Oferta o: ofertas){
-                        System.out.println(o.getIdVeh());
-                        System.out.println(v.getId());
                         if (v.getId() == o.getIdVeh())
                             ofVeh.add(o);
                     }
-                    System.out.println(ofVeh);
                     
                     v.setOfertas(ofVeh);
-                    System.out.println(v.getOfertas());
                 
                     System.out.println("Se han realizado " + v.getOfertas().size() + " ofertas");
                 

@@ -88,15 +88,16 @@ public class Vehiculo {
         ArrayList<Negociante> negos = Vendedor.readFileNeg("negociantes.txt");
         Oferta nxtOf = new Oferta();
         String mail = "";
+        boolean cond = true;
         
         do{
-            System.out.println("Oferta " + (pos+1)); 
+            System.out.println("\nOferta " + (pos+1) + "\n"); 
             for (Negociante n: negos){
                 if (n.getId()==ofertas.get(pos).getIdComp())
                     mail = n.getCorreo();
             }
             System.out.println("Correo: " + mail);
-            System.out.println("Precio Ofertado: " + ofertas.get(pos).getOferta());
+            System.out.println("Precio Ofertado: " + ofertas.get(pos).getOferta() + "\n");
             System.out.println("1. Siguiente Oferta");
             if (pos>0){
                 System.out.println("2. Anterior Oferta");
@@ -104,18 +105,25 @@ public class Vehiculo {
             }else if(pos==0){
                 System.out.println("2. Aceptar Oferta");
             }
+            System.out.print("Seleccione una opción: ");
             opc = sc.nextInt();
             sc.nextLine();
-            if (opc == 1){
+            if (opc == 1 && ofertas.size() > pos+1){
                 pos += 1;
                 opc = 0;
+            }else if(opc==1 && ofertas.size()==pos+1){
+                System.out.println("No hay más ofertas.");
             }else if(opc==2 && pos>0){
                 pos -= 1;
                 opc = 0;
-            }else if(opc==3 || (opc==2 && pos==0)){
+            }else if((opc==3 && pos>0) || (opc==2 && pos==0)){
                 nxtOf = ofertas.get(pos);
+                System.out.println("Ha aceptado la Oferta " + (pos+1) + "por el vehículo " + this.getMarca() + " " + this.getModelo());
+                cond = false;
+            }else{
+                System.out.println("Opción inválida, vuelva a intentar.");
             }
-        }while(opc != 3 || (opc==2 && pos==0));
+        }while(cond);
         
         return nxtOf;
     }//para avanzar y retroceder por las ofertas disponibles
