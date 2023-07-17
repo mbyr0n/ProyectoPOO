@@ -1,1 +1,2 @@
 2,09266638,Mitsubishu,Neon72,AC,Azul,Eco,2020,233.0,12333.5,Camioneta
+3,hjk2004,chevrolet,aveo,G98,negro,gasolina,2009,200000.0,10000.0,auto,polarizados,hidraulica
