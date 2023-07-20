@@ -1,2 +1,6 @@
-2,09266638,Mitsubishu,Neon72,AC,Azul,Eco,2020,233.0,12333.5,Camioneta
-3,hjk2004,chevrolet,aveo,G98,negro,gasolina,2009,200000.0,10000.0,auto,polarizados,hidraulica
+2,1,09266638,Mitsubishu,Neon72,AC,Azul,Eco,2020,233.0,12333.5,Camioneta
+3,5,hjk2004,chevrolet,aveo,G98,negro,gasolina,2009,200000.0,10000.0,Auto
+4,1,GY2023,Hyundai,Aveo Family,AC,Verde,Diesel,2020,12.0,120000.0,Carro
+5,2,GY2021H,Ferrari,Generacion Y,AC,Amarillo,Gasolina,2021,34.0,200000.0,Auto de carreras
+6,1,QU3043,Mitsubishu,4ta version,DC,Rojo,Gasolina,2013,120.67,18000.0,Auto
+7,1,GY4095,Volkswagen,Pichirilo,DC,Blanco,gasolina,2013,123000.0,12300.0,Carro

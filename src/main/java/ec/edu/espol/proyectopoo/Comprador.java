@@ -75,14 +75,14 @@ public class Comprador extends Negociante {
         while (continuarRevisando) {
             Vehiculo vehiculo = vehiculosEncontrados.get(posicionActual);
             System.out.println(vehiculo);
-            System.out.println("--- Vehículo ---");
-            System.out.println("Tipo: " + vehiculo.getTipoVeh());
-            System.out.println("Placa: " + vehiculo.getPlaca());
-            System.out.println("Marca: " + vehiculo.getMarca());
-            System.out.println("Modelo: " + vehiculo.getModelo());
-            System.out.println("Año: " + vehiculo.getAnio());
-            System.out.println("Recorrido: " + vehiculo.getRecorrido());
-            System.out.println("Precio: " + vehiculo.getPrecio());
+            System.out.println("\n--- Vehículo ---");
+            System.out.println("    Tipo: " + vehiculo.getTipoVeh());
+            System.out.println("    Placa: " + vehiculo.getPlaca());
+            System.out.println("    Marca: " + vehiculo.getMarca());
+            System.out.println("    Modelo: " + vehiculo.getModelo());
+            System.out.println("    Año: " + vehiculo.getAnio());
+            System.out.println("    Recorrido: " + vehiculo.getRecorrido());
+            System.out.println("    Precio: " + vehiculo.getPrecio() + "\n");
 
             System.out.println("1. Siguiente Vehículo");
             System.out.println("2. Anterior Vehículo");

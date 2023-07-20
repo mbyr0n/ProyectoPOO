@@ -19,7 +19,7 @@ public class MenuOpciones {
         int opcion;
 
         do {
-            System.out.println("-------- Menú de Opciones ------- \n");
+            System.out.println("\n-------- Menú de Opciones ------- \n");
             System.out.println("1. Vendedor");
             System.out.println("2. Comprador");
             System.out.println("3. Salir");
@@ -35,10 +35,10 @@ public class MenuOpciones {
                     MenuOpciones.mostrarMenuComprador(scanner);
                     break;
                 case 3:
-                    System.out.println("¡Hasta luego!");
+                    System.out.println("¡Hasta luego!\n");
                     break;
                 default:
-                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+                    System.out.println("Opción no válida. Por favor, seleccione una opción válida, reintentar.\n");
                     break;
             }
         } while (opcion != 3);
@@ -53,7 +53,8 @@ public class MenuOpciones {
             System.out.println("1. Registrar un nuevo vendedor");
             System.out.println("2. Registrar un nuevo vehículo");
             System.out.println("3. Aceptar oferta");
-            System.out.println("4. Regresar");
+            System.out.println("4. Eliminar Vehiculo");
+            System.out.println("5. Regresar");
             System.out.print("Seleccione una opción: ");
             opcion = scanner.nextInt();
             scanner.nextLine(); // Limpiar el buffer del scanner
@@ -69,13 +70,16 @@ public class MenuOpciones {
                     Vendedor.revisarOfertas(scanner);// Lógica para aceptar una oferta
                     break;
                 case 4:
-                    System.out.println("Regresando al menú principal...");
+                    Vendedor.eliminarVehiculo(scanner);
+                    break;
+                case 5:
+                    System.out.println("Regresando al menú principal...\n");
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
                     break;
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
     }
 
     //método para mostrar el menú del comprador

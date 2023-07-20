@@ -16,8 +16,8 @@ public class Camioneta extends Auto{
     
     //constructor
     
-    public Camioneta(int id, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrios, String transmision, String traccion) {
-        super(id, placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, vidrios, transmision);
+    public Camioneta(int id, int duenio, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh, String vidrios, String transmision, String traccion) {
+        super(id, duenio, placa, marca, modelo, tipoMotor, color, tipoComb, anio, recorrido, precio, tipoVeh, vidrios, transmision);
         this.traccion = traccion;
     }
 

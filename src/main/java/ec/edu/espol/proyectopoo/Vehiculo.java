@@ -23,11 +23,16 @@ public class Vehiculo {
     protected double recorrido, precio;
     protected String tipoVeh;
     protected ArrayList<Oferta> ofertas;
-    protected Vendedor duenio;
+    protected int duenio;
     
     //constructor
 
-    public Vehiculo(int id, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh) {
+    public Vehiculo() {
+    }
+
+    
+    public Vehiculo(int id, int duenio, String placa, String marca, String modelo, String tipoMotor, String color, String tipoComb, int anio, double recorrido, double precio, String tipoVeh) {
+        this.duenio = duenio;
         this.id = id;
         this.placa = placa;
         this.marca = marca;
@@ -50,7 +55,7 @@ public class Vehiculo {
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] datos = linea.split(",");
-                Vehiculo nextVeh = new Vehiculo(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], Integer.parseInt(datos[7]), Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), datos[10]);
+                Vehiculo nextVeh = new Vehiculo(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], Integer.parseInt(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]), datos[11]);
                 vehiculos.add(nextVeh);
             }
         }
@@ -127,10 +132,50 @@ public class Vehiculo {
         
         return nxtOf;
     }//para avanzar y retroceder por las ofertas disponibles
+    
+     public static Vehiculo verVehiculos(Scanner sc, ArrayList<Vehiculo> vehs){ //meti aca el metodo ver ofertas para reducir codigo
+        int pos = 0;
+        int opc = 0;
+        Vehiculo nxtVeh = new Vehiculo();
+        String mail = "";
+        boolean cond = true;
+        
+        do{
+            System.out.println("\nOferta " + (pos+1) + "\n");
+            System.out.println("    Vehiculo: " + vehs.get(pos).getMarca() + " " + vehs.get(pos).getModelo() + " de Placa: " + vehs.get(pos).getPlaca() + "\n");
+            System.out.println("1. Siguiente Vehiculo");
+            if (pos>0){
+                System.out.println("2. Anterior Vehiculo");
+                System.out.println("3. Eliminar Vehiculo");
+            }else if(pos==0){
+                System.out.println("2. Eliminar Vehiculo");
+            }
+            System.out.print("Seleccione una opción: ");
+            opc = sc.nextInt();
+            sc.nextLine();
+            if (opc == 1 && vehs.size() > pos+1){
+                pos += 1;
+                opc = 0;
+            }else if(opc==1 && vehs.size()==pos+1){
+                System.out.println("No hay más ofertas.");
+            }else if(opc==2 && pos>0){
+                pos -= 1;
+                opc = 0;
+            }else if((opc==3 && pos>0) || (opc==2 && pos==0)){
+                nxtVeh = vehs.get(pos);
+                System.out.println("Ha eliminado el Vehiculo " + (pos+1) + " " + nxtVeh.getMarca() + " " + nxtVeh.getModelo());
+                cond = false;
+            }else{
+                System.out.println("Opción inválida, vuelva a intentar.");
+            }
+        }while(cond);
+        
+        return nxtVeh;
+    }
 
     @Override
     public String toString() {
-        return this.id + "," + this.placa + "," + this.marca + "," + this.modelo + "," + this.tipoMotor + "," + this.color + "," + this.tipoComb + "," + this.anio + "," + this.recorrido + ","+this.precio+","+this.tipoVeh;
+        return this.id + "," + this.duenio + "," + this.placa + "," + this.marca + "," + this.modelo + "," + this.tipoMotor + "," + this.color + "," + this.tipoComb + "," + this.anio + "," + this.recorrido + ","+this.precio+","+this.tipoVeh;
     }
     
     //getter y setter
@@ -223,11 +268,11 @@ public class Vehiculo {
         this.tipoVeh = tipoVeh;
     }
 
-    public Vendedor getDuenio() {
+    public int getDuenio() {
         return duenio;
     }
 
-    public void setDuenio(Vendedor duenio) {
+    public void setDuenio(int duenio) {
         this.duenio = duenio;
     }
 

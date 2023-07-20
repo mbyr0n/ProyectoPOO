@@ -52,11 +52,11 @@ public class Vendedor extends Negociante {
         String c = sc.nextLine();
         String hashClave = Util.toHexString(Util.generarHash(c));
         
-        Negociante usuario = Negociante.existeClaveCorreo(hashClave, correo);
+        Negociante us = Negociante.existeClaveCorreo(hashClave, correo);
         
-        if (null != usuario){ //verifica que exista un usuario con correo y clave anteriores
+        if (null != us){ //verifica que exista un usuario con correo y clave anteriores
             int id = Util.nextID("vehiculos.txt"); // id nuevo
-            //Vendedor nxtDuenio = (Vendedor) usuario; //por si acaso para ver si hay que incluir un duenio en el constructor del vehiculo
+            Vendedor nxtDuenio = new Vendedor(us.getId(),us.getNombre(),us.getApellido(),us.getOrganizacion(),us.getCorreo(), us.getClave());; //por si acaso para ver si hay que incluir un duenio en el constructor del vehiculo
             System.out.print("Placa: ");
             String placa = sc.nextLine();
             
@@ -108,16 +108,16 @@ public class Vendedor extends Negociante {
                     String transm = sc.nextLine();
 
                     if (tipoVeh.equals("Auto") || tipoVeh.equals("auto")){ 
-                        Auto vehiculo = new Auto(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
+                        Auto vehiculo = new Auto( id, nxtDuenio.getId(), placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm);
                         Vehiculo.saveFileVeh(vehiculo);
                     }else if (tipoVeh.equals("Camioneta") || tipoVeh.equals("Camioneta")){//Por si es Auto ya que los 2 atributos anteriores los hereda de Auto
                         System.out.print("Tracción: ");
                         String traccion = sc.nextLine();
-                        Camioneta vehiculo = new Camioneta(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
+                        Camioneta vehiculo = new Camioneta(id, nxtDuenio.getId(), placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh, vidrio, transm, traccion);
                         Vehiculo.saveFileVeh(vehiculo);
                     }
                 }else{//Si no es Auto o Camioneta los guarda nomas
-                    Vehiculo vehiculo = new Vehiculo(id, placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh);
+                    Vehiculo vehiculo = new Vehiculo(id, nxtDuenio.getId(), placa, marca, modelo, tipoMotor, color, tipoCombustible, anio, recorrido,  precio, tipoVeh);
                     Vehiculo.saveFileVeh(vehiculo);
                 }
             }    
@@ -141,8 +141,8 @@ public class Vendedor extends Negociante {
         
             ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
             for (Vehiculo v: vehs){
-                if (v.getPlaca().equals(placa)){
-                    System.out.println(v.getMarca()+ " " + v.getModelo() + " Precio: " + v.getPrecio());
+                if (v.getPlaca().equals(placa) && v.getDuenio()==nxtDuenio.getId()){
+                    
                     ArrayList<Oferta> ofertas = Oferta.readFileOf();
                     ArrayList<Oferta> ofVeh = new ArrayList<>();
                     
@@ -150,9 +150,13 @@ public class Vendedor extends Negociante {
                         if (v.getId() == o.getIdVeh())
                             ofVeh.add(o);
                     }
-                    
                     v.setOfertas(ofVeh);
-                
+                    
+                    if(v.getOfertas().size()==0){
+                        System.out.println("Este vehiculo no tiene ofertas.");
+                        return;
+                    }
+                    System.out.println(v.getMarca()+ " " + v.getModelo() + " Precio: " + v.getPrecio());
                     System.out.println("Se han realizado " + v.getOfertas().size() + " ofertas");
                 
                     Oferta of = v.verOfertas(sc);
@@ -167,9 +171,37 @@ public class Vendedor extends Negociante {
                     }
 
                     Util.enviarConGMail(destinatario, v.getMarca()+ " " + v.getModelo());
+                }else if (v.getPlaca().equals(placa) && v.getDuenio()!=nxtDuenio.getId()){
+                    System.out.println("No puede ver ofertas de este carro, ya que no es suyo.");
                 }
             }
         }        
+    }
+    
+    public static void eliminarVehiculo(Scanner sc) throws NoSuchAlgorithmException{
+        System.out.print("Ingrese su correo: ");
+        String correo = sc.nextLine();
+        System.out.print("Ingrese su Clave: ");
+        String c = sc.nextLine();
+        String hashClave = Util.toHexString(Util.generarHash(c));
+
+        if (Negociante.existeClave(hashClave, Negociante.readFileNeg("negociantes.txt")) && Negociante.existeCorreo(correo, Negociante.readFileNeg("negociantes.txt"))){
+            Negociante us = Negociante.existeClaveCorreo(hashClave, correo);
+            Vendedor nxtDuenio = new Vendedor(us.getId(),us.getNombre(),us.getApellido(),us.getOrganizacion(),us.getCorreo(), us.getClave());
+
+            System.out.println("Sus vehiculos son: ");
+
+            ArrayList<Vehiculo> vehs = Vehiculo.readFileVeh();
+            ArrayList<Vehiculo> filt = new ArrayList<>();
+        for (Vehiculo v: vehs){
+            if (v.getDuenio()==nxtDuenio.getId()){
+                filt.add(v);
+            }   
+        }
+
+            Vehiculo elmVeh = Vehiculo.verVehiculos(sc, filt);
+            Vehiculo.rewriteFileVeh(vehs, elmVeh);
+        }
     }
     
 }
