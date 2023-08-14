@@ -5,8 +5,14 @@
 package ec.edu.espol.proyectopoo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import static java.lang.Integer.parseInt;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -16,7 +22,7 @@ import java.util.Scanner;
  *
  * @author byron
  */
-public class Negociante {
+public class Negociante implements Serializable{
     //atributos
     protected int id;
     protected String nombre, apellido, organizacion, correo, clave;
@@ -133,6 +139,31 @@ public class Negociante {
             System.out.println(e.getMessage());
         }
         return negociantes;
+    }
+    
+    public static ArrayList<Negociante> readFileSer(String nom){
+        ArrayList<Negociante> negociantes = new ArrayList<>();
+        try(ObjectInputStream ser = new ObjectInputStream(new FileInputStream(nom))){
+            negociantes = (ArrayList<Negociante>) ser.readObject();
+        }catch(FileNotFoundException f){
+            System.out.println(f);
+        }catch(ClassNotFoundException c){
+            System.out.println("Esta clase no esta dentro del archivo");
+        }catch(IOException i){
+            System.out.println(i);
+        }
+        
+        return negociantes;
+    }
+    
+    public static void saveFileSer(ArrayList<Negociante> negs, String nom){
+        try(ObjectOutputStream ser = new ObjectOutputStream(new FileOutputStream(nom))){
+            ser.writeObject(negs);
+        }catch(IOException e){
+            System.out.println(e);
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
     
     public static void saveFileNeg(Negociante n, String nomFile){
