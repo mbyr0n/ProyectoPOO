@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public class MenuOpciones {
     }
 
     //método para mostrar el menú del vendedor
-    public static void mostrarMenuVendedor(Scanner scanner) throws NoSuchAlgorithmException{
+    public static void mostrarMenuVendedor(Scanner scanner) throws NoSuchAlgorithmException, IOException{
         int opcion;
 
         do {
