@@ -6,10 +6,12 @@ package ec.edu.espol.proyectopoo;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 /**
  *
@@ -48,7 +50,7 @@ public class Vehiculo {
     }
     
     //metodos para leer y editar archivos donde estan los negociantes
-    public static ArrayList<Vehiculo> readFileVeh(){
+    /*public static ArrayList<Vehiculo> readFileVeh(){
         ArrayList<Vehiculo> vehiculos = new ArrayList<>();
         
         try(Scanner sc = new Scanner(new File("vehiculos.txt"))){
@@ -63,7 +65,33 @@ public class Vehiculo {
             System.out.println(e.getMessage());
         }
         return vehiculos;
+    }*/
+    public static ArrayList<Vehiculo> readFileVeh() throws IOException {
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+
+        try (Scanner sc = new Scanner(new File("vehiculos.txt"))) {
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+                String[] datos = linea.split(",");
+            
+                if (datos.length != 12) {
+                    throw new IOException("Formato de línea inválido en el archivo vehiculos.txt");
+                }
+            
+                try {
+                    Vehiculo nextVeh = new Vehiculo(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], Integer.parseInt(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]), datos[11]);
+                    vehiculos.add(nextVeh);
+                } catch (NumberFormatException e) {
+                    throw new IOException("Error al convertir datos en la línea: " + linea, e);
+                }
+            }
+        } catch (IOException e) {
+            throw new IOException("Error al leer el archivo vehiculos.txt", e);
+        }
+
+        return vehiculos;
     }
+
     
     public static void saveFileVeh(Vehiculo v){
         try(PrintWriter pw = new PrintWriter(new FileOutputStream(new File("vehiculos.txt"), true))){
@@ -86,7 +114,7 @@ public class Vehiculo {
         }
     }
     
-    public Oferta verOfertas(Scanner sc){ //meti aca el metodo ver ofertas para reducir codigo
+    /*public Oferta verOfertas(Scanner sc){ //meti aca el metodo ver ofertas para reducir codigo
         int pos = 0;
         int opc = 0;
         ArrayList<Oferta> ofertas = this.ofertas;
@@ -131,7 +159,68 @@ public class Vehiculo {
         }while(cond);
         
         return nxtOf;
-    }//para avanzar y retroceder por las ofertas disponibles
+    }//para avanzar y retroceder por las ofertas disponibles*/
+    
+    public Oferta verOfertas(Scanner sc) {
+        int pos = 0;
+        int opc = 0;
+        ArrayList<Oferta> ofertas = this.ofertas;
+        ArrayList<Negociante> negos = Vendedor.readFileNeg("negociantes.txt");
+        Oferta nxtOf = new Oferta();
+        boolean cond = true;
+        
+        do {
+            imprimirOfertaInfo(pos, negos, ofertas);
+            opc = sc.nextInt();
+            sc.nextLine();
+            cond = procesarOpcion(opc, pos, ofertas, nxtOf);
+        } while (cond);
+        
+        return nxtOf;
+    }
+
+    private void imprimirOfertaInfo(int pos, ArrayList<Negociante> negos, ArrayList<Oferta> ofertas) {
+        System.out.println("\nOferta " + (pos + 1) + "\n");
+        String mail = obtenerCorreoNegociante(negos, ofertas, pos);
+        System.out.println("Correo: " + mail);
+        System.out.println("Precio Ofertado: " + ofertas.get(pos).getOferta() + "\n");
+        System.out.println("1. Siguiente Oferta");
+        if (pos > 0) {
+            System.out.println("2. Anterior Oferta");
+            System.out.println("3. Aceptar Oferta");
+        } else if (pos == 0) {
+            System.out.println("2. Aceptar Oferta");
+        }
+        System.out.print("Seleccione una opción: ");
+    }
+
+    private String obtenerCorreoNegociante(ArrayList<Negociante> negos, ArrayList<Oferta> ofertas, int pos) {
+        String mail = "";
+        for (Negociante n : negos) {
+            if (n.getId() == ofertas.get(pos).getIdComp()) {
+                mail = n.getCorreo();
+                break;
+            }
+        }
+        return mail;
+    }
+
+    private boolean procesarOpcion(int opc, int pos, ArrayList<Oferta> ofertas, Oferta nxtOf) {
+        if (opc == 1 && ofertas.size() > pos + 1) {
+            pos += 1;
+        } else if (opc == 1 && ofertas.size() == pos + 1) {
+            System.out.println("No hay más ofertas.");
+        } else if (opc == 2 && pos > 0) {
+            pos -= 1;
+        } else if ((opc == 3 && pos > 0) || (opc == 2 && pos == 0)) {
+            nxtOf = ofertas.get(pos);
+            System.out.println("Ha aceptado la Oferta " + (pos + 1) + " por el vehículo " + this.getMarca() + " " + this.getModelo());
+            return false;
+        } else {
+            System.out.println("Opción inválida, vuelva a intentar.");
+        }
+        return true;
+    }
     
      public static Vehiculo verVehiculos(Scanner sc, ArrayList<Vehiculo> vehs){ //meti aca el metodo ver ofertas para reducir codigo
         int pos = 0;

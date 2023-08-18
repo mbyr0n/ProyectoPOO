@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,7 +33,7 @@ public class Comprador extends Negociante {
     }
     
     
-    public void ofertarPorVehiculo(Scanner scanner) {
+    public void ofertarPorVehiculo(Scanner scanner, ArrayList<Vehiculo> listaVehiculos) throws IOException {
         System.out.println("--- Búsqueda de Vehículos ---");
 
         System.out.print("Tipo de vehículo (Ingrese 'auto', 'camioneta' o 'moto'): ");
@@ -62,8 +63,11 @@ public class Comprador extends Negociante {
         double precioMaximo = scanner.nextDouble();
         scanner.nextLine(); // Limpiar el buffer del scanner
 
-        ArrayList<Vehiculo> vehiculosEncontrados = buscarVehiculo(tipoVehiculo, recorridoMinimo, recorridoMaximo, anioMinimo, anioMaximo, precioMinimo, precioMaximo);
-
+        //ArrayList<Vehiculo> vehiculosEncontrados = buscarVehiculo(tipoVehiculo, recorridoMinimo, recorridoMaximo, anioMinimo, anioMaximo, precioMinimo, precioMaximo);
+        ArrayList<Vehiculo> vehiculosEncontrados = VehiculoSearchUtil.buscarVehiculo(
+            listaVehiculos, tipoVehiculo, recorridoMinimo, recorridoMaximo,
+            anioMinimo, anioMaximo, precioMinimo, precioMaximo
+        );
         if (vehiculosEncontrados.isEmpty()) {
             System.out.println("No se encontraron vehículos que coincidan con los criterios de búsqueda.");
             return;
@@ -129,7 +133,7 @@ public class Comprador extends Negociante {
         }
     }
 
-    public static ArrayList<Vehiculo> buscarVehiculo(String tipoVehiculo, double recorridoMinimo, double recorridoMaximo, int anioMinimo, int anioMaximo, double precioMinimo, double precioMaximo) {
+    public static ArrayList<Vehiculo> buscarVehiculo(String tipoVehiculo, double recorridoMinimo, double recorridoMaximo, int anioMinimo, int anioMaximo, double precioMinimo, double precioMaximo) throws IOException {
     ArrayList<Vehiculo> vehiculosEncontrados = new ArrayList<>();
 
     ArrayList<Vehiculo> listaVehiculos = Vehiculo.readFileVeh();
@@ -162,5 +166,9 @@ public class Comprador extends Negociante {
         v.agregarOferta(oferta);
         Oferta.saveFileOf(oferta);
         System.out.println("Oferta realizada con éxito. El vehículo ha sido registrado con su oferta.");
+    }
+
+    void ofertarPorVehiculo(Scanner scanner) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

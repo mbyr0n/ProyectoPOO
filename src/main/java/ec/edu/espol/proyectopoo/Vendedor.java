@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectopoo;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public class Vendedor extends Negociante {
     }
      
     
-    public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException{ //terminado
+    public static void registroVehiculo(Scanner sc) throws NoSuchAlgorithmException, IOException{ //terminado
         System.out.print("Ingrese su correo: ");
         String correo = sc.nextLine();
         System.out.print("Ingrese su Clave: ");
@@ -125,7 +126,7 @@ public class Vendedor extends Negociante {
     }
     
     
-    public static void revisarOfertas(Scanner sc) throws NoSuchAlgorithmException{// en proceso
+    public static void revisarOfertas(Scanner sc) throws NoSuchAlgorithmException, IOException{// en proceso
         System.out.print("Ingrese su correo: ");
         String correo = sc.nextLine();
         System.out.print("Ingrese su Clave: ");
@@ -178,7 +179,7 @@ public class Vendedor extends Negociante {
         }        
     }
     
-    public static void eliminarVehiculo(Scanner sc) throws NoSuchAlgorithmException{
+    public static void eliminarVehiculo(Scanner sc) throws NoSuchAlgorithmException, IOException{
         System.out.print("Ingrese su correo: ");
         String correo = sc.nextLine();
         System.out.print("Ingrese su Clave: ");
